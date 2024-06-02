@@ -13,6 +13,8 @@ use App\Models\JwtResponse;
 use App\Models\SuccessResponse;
 use App\Models\UserResponse;
 use App\Models\UserRoleMapping;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class AuthController extends Controller
 {
@@ -40,7 +42,8 @@ class AuthController extends Controller
         foreach ($user->roles as $roleMapping) {
             $roles[] = $roleMapping->role_id;
         }
-        $claimToken = Auth::claims(['roles' => $roles])->attempt($credentials);
+//        $claimToken = Auth::claims(['roles' => $roles])->fromUser($user);
+        $claimToken = auth('api')->claims(['roles' => $roles])->attempt($credentials);
 
         $responseData = new JwtResponse($claimToken, $this->getExpiration());
 
@@ -94,11 +97,16 @@ class AuthController extends Controller
         return response()->json(new DataResponse($responseData));
     }
 
+    public function me()
+    {
+        return response()->json(Auth::user());
+    }
+
     /**
      * Returns the expiration time of the current token in seconds
      * @return int Expiration time
      */
     private function getExpiration() {
-        return Auth::factory()->getTTL() * 60;
+        return auth('api')->factory()->getTTL() * 60;
     }
 }

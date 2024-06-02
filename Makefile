@@ -1,5 +1,7 @@
 #!/usr/bin/make -f
 
+PROJECT_NAME = $(shell git remote get-url origin | xargs basename -s .git)
+
 #? help: Get more info on make commands.
 help: Makefile
 	@echo " Choose a command run in "$(PROJECT_NAME)":"
@@ -15,3 +17,8 @@ run:
 migrate:
 	php artisan migrate
 .PHONY: migrate
+
+#? routes: List all available app routes
+routes:
+	php artisan route:list
+.PHONY: routes
