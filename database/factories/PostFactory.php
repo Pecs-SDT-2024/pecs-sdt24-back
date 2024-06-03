@@ -23,8 +23,8 @@ class PostFactory extends Factory
     {
         return [
             'title' => $this->faker->unique()->sentence,
-            'abstract' => $this->faker->paragraph,
-            'content' => $this->faker->paragraph,
+            'abstract' => $this->faker->sentence,
+            'content' => $this->faker->sentence,
             'posted' => now(),
         ];
     }
