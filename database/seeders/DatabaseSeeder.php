@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Post;
 use App\Models\User;
+
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -16,23 +17,9 @@ class DatabaseSeeder extends Seeder
     {
         Post::factory(10)->create();
 
-        \App\Models\User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => 'password'
-        ]);
+        \App\Models\User::factory(10)->create();
 
-        \App\Models\Role::factory()->create([
-            'name' => 'Registered'
-        ]);
-
-        \App\Models\Role::factory()->create([
-            'name' => 'Employer'
-        ]);
-
-        \App\Models\Role::factory()->create([
-            'name' => 'Administrator'
-        ]);
+        \App\Models\Role::factory(10)->create();
 
         \App\Models\UserRoleMapping::factory()->create([
             'user_id' => 1,
